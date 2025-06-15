@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Couple Watch & Chat</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
- <style>
+<style>
   body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
   }
 
   header {
@@ -69,6 +69,7 @@
     flex: 1;
     overflow-y: auto;
     margin-bottom: 10px;
+    max-height: 200px;
   }
 
   #chatBox p {
@@ -106,10 +107,19 @@
   @media (max-width: 768px) {
     .container {
       flex-direction: column;
+      gap: 10px;
     }
 
     .video-section iframe {
-      height: 250px;
+      height: 300px;
+    }
+
+    .chat-section {
+      order: 2;
+    }
+
+    #chatBox {
+      max-height: 150px;
     }
   }
 
@@ -118,16 +128,22 @@
       font-size: 1.5em;
     }
 
-    .input-box input {
-      font-size: 14px;
-    }
-
+    .input-box input,
     .input-box button {
       font-size: 14px;
       padding: 8px;
     }
+
+    .video-section iframe {
+      height: 250px;
+    }
+
+    #chatBox {
+      max-height: 120px;
+    }
   }
 </style>
+
 
 </head>
 <body>
@@ -152,7 +168,8 @@
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
   <script>
  const firebaseConfig = {
   apiKey: "tumhara-key",
@@ -196,6 +213,16 @@
       db.ref(`rooms/${room}/messages`).push(msg);
       document.getElementById('messageInput').value = '';
     }
+
+    // chat typing indicator
+    chatRef.on('child_added', snapshot => {
+  const { sender, text, timestamp } = snapshot.val();
+  const p = document.createElement('p');
+  const time = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  p.textContent = `${sender} (${time}): ${text}`;
+  document.getElementById('chatBox').appendChild(p);
+  document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
+});
   </script>
 </body>
 </html>
