@@ -26,11 +26,12 @@
   .container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     width: 95%;
     max-width: 1200px;
     gap: 20px;
-    flex: 1;
-    padding-bottom: 20px;
+    padding: 0 0 20px 0;
+    box-sizing: border-box;
   }
 
   .video-section,
@@ -56,7 +57,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    max-height: 100%;
   }
 
   .id-section {
@@ -104,27 +104,27 @@
     cursor: pointer;
   }
 
-  /* 🌐 Mobile Responsive Layout */
+  /* 📱 Mobile View */
   @media (max-width: 768px) {
     .container {
       flex-direction: column;
     }
 
-    .video-section {
+    .video-section,
+    .chat-section {
       width: 100%;
     }
 
     .video-section iframe {
-      height: 250px;
+      height: 220px;
     }
 
     .chat-section {
-      width: 100%;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     #chatBox {
-      max-height: 150px;
+      max-height: 160px;
     }
   }
 
@@ -133,18 +133,18 @@
       font-size: 1.5em;
     }
 
-    .input-box input,
-    .input-box button {
-      font-size: 14px;
-      padding: 8px;
-    }
-
     .video-section iframe {
-      height: 220px;
+      height: 200px;
     }
 
     #chatBox {
       max-height: 120px;
+    }
+
+    .input-box input,
+    .input-box button {
+      font-size: 14px;
+      padding: 8px;
     }
   }
 </style>
